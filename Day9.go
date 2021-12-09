@@ -9,6 +9,31 @@ func findLowPoints(input [100][100]int) (int, int) {
 	var heights []int
 	basins := make(map[lowPoint]int)
 
+	heights, basins = findLowPointsAndRecordHeight(input, heights, basins)
+
+	basins = countBasinSizes(input, basins)
+
+	var largestBasins = [3]int{0}
+
+	for _, v := range basins {
+		largestBasins = replaceIfLarger(v, largestBasins)
+	}
+
+	basinSize := 1
+	for _, s := range largestBasins {
+		if s != 0 {
+			basinSize = basinSize * s
+		}
+	}
+	sumOfRiskLevels := 0
+	for _, h := range heights {
+		sumOfRiskLevels += h + 1
+	}
+
+	return sumOfRiskLevels, basinSize
+}
+
+func findLowPointsAndRecordHeight(input [100][100]int, heights []int, basins map[lowPoint]int) ([]int, map[lowPoint]int) {
 	for i, row := range input {
 		for j, c := range row {
 			u := i - 1
@@ -23,7 +48,10 @@ func findLowPoints(input [100][100]int) (int, int) {
 			}
 		}
 	}
+	return heights, basins
+}
 
+func countBasinSizes(input [100][100]int, basins map[lowPoint]int) map[lowPoint]int {
 	for i, row := range input {
 		for j, c := range row {
 			if c != 9 && basins[lowPoint{i, j}] == 0 {
@@ -32,25 +60,7 @@ func findLowPoints(input [100][100]int) (int, int) {
 			}
 		}
 	}
-
-	var largestBasins = [3]int{0}
-
-	for _, v := range basins {
-		largestBasins = replaceIfLarger(v, largestBasins)
-	}
-
-	basinSize := 1
-	for _, s := range largestBasins {
-		if s != 0 {
-			basinSize = basinSize * s
-		}
-	}
-	output := 0
-	for _, h := range heights {
-		output += h + 1
-	}
-
-	return output, basinSize
+	return basins
 }
 
 func replaceIfLarger(i int, a [3]int) [3]int {
