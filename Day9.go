@@ -32,7 +32,6 @@ func findLowPoints(input [100][100]int) (int, int) {
 			}
 		}
 	}
-	//fmt.Println(basins)
 
 	var largestBasins = [3]int{0}
 
