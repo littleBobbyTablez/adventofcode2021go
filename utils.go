@@ -48,6 +48,27 @@ func readFileRowToInt(pathToFile string) []int {
 	return values
 }
 
+func readFileHeightMap(pathToFile string) [100][100]int {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	input := strings.Split(string(s), "\n")
+	var values [100][100]int
+
+	for i := range input {
+		str := input[i]
+		split := strings.Split(str, "")
+
+		for j, v := range split {
+			n, _ := strconv.Atoi(v)
+			values[i][j] = n
+		}
+	}
+	return values
+}
+
 func readFileRowToFishMap(pathToFile string) map[int]int {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {
