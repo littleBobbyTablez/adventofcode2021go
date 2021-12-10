@@ -20,7 +20,7 @@ func calculateUnfinishedScore(input []string) int {
 	var scores []int
 
 	for _, s := range input {
-		scores = append(scores, findUnfinished(s))
+		scores = append(scores, findUnfinishedAndScore(s))
 	}
 
 	zeroCounter := 0
@@ -36,7 +36,7 @@ func calculateUnfinishedScore(input []string) int {
 	return noZeros[len(noZeros)/2]
 }
 
-func findUnfinished(line string) int {
+func findUnfinishedAndScore(line string) int {
 	var stack []string
 	completionMap := initCompletionValueMap()
 	noErrors := true
