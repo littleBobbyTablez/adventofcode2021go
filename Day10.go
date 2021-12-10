@@ -5,14 +5,11 @@ import (
 )
 
 func findFirstCorruptElement(input []string) int {
-
 	errorValues := initErrorValueMap()
 
 	sum := 0
-
 	for _, line := range input {
 		firstError := findFirstError(line)
-
 		sum += errorValues[firstError]
 	}
 
@@ -34,7 +31,6 @@ func calculateUnfinishedScore(input []string) int {
 	}
 
 	sort.Ints(scores)
-
 	noZeros := scores[zeroCounter:]
 
 	return noZeros[len(noZeros)/2]
@@ -52,7 +48,7 @@ func findUnfinished(line string) int {
 		} else {
 			l := len(stack) - 1
 			n := stack[l]
-			if cosingFitsOpening(x, n) {
+			if closingFitsOpening(x, n) {
 				stack = stack[:l]
 			} else {
 				noErrors = false
@@ -65,13 +61,12 @@ func findUnfinished(line string) int {
 		reversed = reverseSlice(stack)
 	}
 
-	score := calculateScore(reversed, completionMap)
-
-	return score
+	return calculateScore(reversed, completionMap)
 }
 
 func calculateScore(reversed []string, completionMap map[string]int) int {
 	total := 0
+
 	for _, s := range reversed {
 		total = (total * 5) + completionMap[s]
 	}
@@ -99,7 +94,7 @@ func findFirstError(line string) string {
 		} else {
 			l := len(stack) - 1
 			n := stack[l]
-			if cosingFitsOpening(x, n) {
+			if closingFitsOpening(x, n) {
 				stack = stack[:l]
 			} else {
 				return x
@@ -109,7 +104,7 @@ func findFirstError(line string) string {
 	return ""
 }
 
-func cosingFitsOpening(x string, n string) bool {
+func closingFitsOpening(x string, n string) bool {
 	switch {
 	case x == ")" && n == "(":
 		return true
