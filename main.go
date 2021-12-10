@@ -13,9 +13,17 @@ func main() {
 	//executeDay6()
 	//executeDay7()
 	//executeDay8()
+	//executeDay9()
 
-	executeDay9()
+	executeDay10()
+}
 
+func executeDay10() {
+	pathToFile := "resources/Day10Input.txt"
+	input := readFileToStringSlice(pathToFile)
+
+	fmt.Println(findFirstCorruptElement(input))
+	fmt.Println(calculateUnfinishedScore(input))
 }
 
 func executeDay9() {
