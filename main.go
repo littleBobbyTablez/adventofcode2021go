@@ -17,6 +17,13 @@ func main() {
 	//executeDay10()
 	//executeDay11()
 
+	pathToFile := "resources/Day12Example.txt"
+	//pathToFile := "resources/Day12Input.txt"
+	input := readFileToPathMap(pathToFile)
+
+	//fmt.Println(findPaths(input))
+	findPaths2(input)
+
 }
 
 func executeDay11() {

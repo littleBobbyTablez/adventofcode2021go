@@ -124,6 +124,28 @@ func readFileToStringSlice(pathToFile string) []string {
 	return strings.Split(string(s), "\n")
 }
 
+func readFileToPathMap(pathToFile string) map[string][]string {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	paths := strings.Split(string(s), "\n")
+	output := make(map[string][]string)
+
+	for _, path := range paths {
+		split := strings.Split(path, "-")
+		key := split[0]
+		value := split[1]
+		output[key] = append(output[key], value)
+		if value != "end" {
+			output[value] = append(output[value], key)
+		}
+	}
+
+	return output
+}
+
 func readFileToBingoBoards(pathToFile string) []string {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {
