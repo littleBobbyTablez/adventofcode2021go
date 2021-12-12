@@ -8,6 +8,27 @@ import (
 	"strings"
 )
 
+func readFileOctupusMap(pathToFile string) [10][10]int {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	input := strings.Split(string(s), "\n")
+	var values [10][10]int
+
+	for i := range input {
+		str := input[i]
+		split := strings.Split(str, "")
+
+		for j, v := range split {
+			n, _ := strconv.Atoi(v)
+			values[i][j] = n
+		}
+	}
+	return values
+}
+
 func readFileToIntSlice(pathToFile string) []int {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {

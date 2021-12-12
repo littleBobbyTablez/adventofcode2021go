@@ -14,8 +14,16 @@ func main() {
 	//executeDay7()
 	//executeDay8()
 	//executeDay9()
+	//executeDay10()
+	//executeDay11()
 
-	executeDay10()
+}
+
+func executeDay11() {
+	pathToFile := "resources/Day11Input.txt"
+	input := readFileOctupusMap(pathToFile)
+
+	fmt.Println(countFalshes(input, 0, 0))
 }
 
 func executeDay10() {
@@ -27,7 +35,7 @@ func executeDay10() {
 }
 
 func executeDay9() {
-	pathToFile := "resources/Day9Input.txt"
+	pathToFile := "resources/Day9InputMark.txt"
 	input := readFileHeightMap(pathToFile)
 
 	fmt.Println(findLowPoints(input))
