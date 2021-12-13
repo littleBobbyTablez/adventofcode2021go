@@ -13,20 +13,15 @@ type path struct {
 func findPaths2(input map[string][]string) {
 
 	visit := []string{"start"}
-	paths := []path{{false, "start"}}
+
+	paths := make(map[path]bool)
+	paths[path{false, "start"}] = true
 	step2(input, visit, paths)
 }
 
-func step2(input map[string][]string, toVisit []string, paths []path) {
+func step2(input map[string][]string, toVisit []string, paths map[path]bool) {
 	if len(toVisit) == 0 {
-		output := make(map[path]bool)
-		for i, path := range paths {
-			split := strings.Split(path.path, ",")
-			if split[len(split)-1] == "end" {
-				output[paths[i]] = true
-			}
-		}
-		fmt.Println(len(output))
+		fmt.Println(len(paths))
 		return
 	}
 
@@ -45,61 +40,36 @@ func step2(input map[string][]string, toVisit []string, paths []path) {
 	step2(input, append(toVisit[1:], nextNodes...), paths)
 }
 
-func needed2(node string, paths []path) bool {
+func needed2(node string, paths map[path]bool) bool {
 	needed := false
 	if node == "start" {
 		return false
 	}
-	for _, p := range paths {
-		split := strings.Split(p.path, ",")
-		if (split[len(split)-1] != "end" && !strings.Contains(p.path, node)) || (split[len(split)-1] != "end" && !p.doubleSmall) {
+	for p, _ := range paths {
+		isNotFinished := p.path[len(p.path)-3:] != "end"
+		if (isNotFinished && !strings.Contains(p.path, node)) || (isNotFinished && !p.doubleSmall) {
 			needed = true
 		}
 	}
 	return needed
 }
 
-func appendIfEndsWithNode2(nextNodes []string, paths []path, node string) []path {
+func appendIfEndsWithNode2(nextNodes []string, paths map[path]bool, node string) map[path]bool {
 	if node == "end" || nextNodes == nil {
 		return paths
 	}
-	var newPaths []path
-	var pathsToRemove []path
-	for i, p := range paths {
-		split := strings.Split(p.path, ",")
-		if split[len(split)-1] == node {
+	for p, _ := range paths {
+		if p.path[len(p.path)-len(node):] == node {
 			for _, nextNode := range nextNodes {
-				if !isLower(nextNode) {
-					newPaths = append(newPaths, path{p.doubleSmall, strings.Join(append(split, nextNode), ",")})
-				} else if !strings.Contains(p.path, nextNode) {
-					newPaths = append(newPaths, path{p.doubleSmall, strings.Join(append(split, nextNode), ",")})
+				if !isLower(nextNode) || !strings.Contains(p.path, nextNode) {
+					paths[path{p.doubleSmall, p.path + "," + nextNode}] = true
 				} else if strings.Contains(p.path, nextNode) && !p.doubleSmall {
-					newPaths = append(newPaths, path{true, strings.Join(append(split, nextNode), ",")})
+					paths[path{true, p.path + "," + nextNode}] = true
 				}
 			}
-			pathsToRemove = append(pathsToRemove, paths[i])
+			delete(paths, p)
 		}
 	}
 
-	for _, p := range pathsToRemove {
-		paths = remove2(paths, p)
-	}
-	return append(paths, newPaths...)
-}
-
-func remove2(s []path, n path) []path {
-	length := len(s)
-	found := false
-	for i := 0; i < length; i++ {
-		subject := s[i]
-		if subject == n {
-			s[i] = s[length-1]
-			found = true
-		}
-	}
-
-	if found {
-		return s[:length-1]
-	}
-	return s
+	return paths
 }

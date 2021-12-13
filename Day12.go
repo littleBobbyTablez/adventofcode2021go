@@ -40,8 +40,7 @@ func step(input map[string][]string, toVisit []string, paths []string) int {
 func needed(node string, paths []string) bool {
 	needed := false
 	for _, path := range paths {
-		split := strings.Split(path, ",")
-		if split[len(split)-1] != "end" && !strings.Contains(path, node) {
+		if path[len(path)-3:] != "end" && !strings.Contains(path, node) {
 			needed = true
 		}
 	}
@@ -55,11 +54,10 @@ func appendIfEndsWithNode(nextNodes []string, paths []string, node string) []str
 	var newPaths []string
 	var pathsToRemove []string
 	for i, path := range paths {
-		split := strings.Split(path, ",")
-		if split[len(split)-1] == node {
+		if path[len(path)-len(node):] == node {
 			for _, nextNode := range nextNodes {
 				if !strings.Contains(path, nextNode) || !isLower(nextNode) {
-					newPaths = append(newPaths, strings.Join(append(split, nextNode), ","))
+					newPaths = append(newPaths, path+","+nextNode)
 				}
 			}
 			pathsToRemove = append(pathsToRemove, paths[i])
