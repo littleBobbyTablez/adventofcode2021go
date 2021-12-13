@@ -22,7 +22,7 @@ func main() {
 	pathToFile := "resources/Day13Input.txt"
 	inputDots, inputFolds := readFileDotsAndFolds(pathToFile)
 
-	once, _ := foldOnce(inputDots, inputFolds[0])
+	once := foldOnce(inputDots, inputFolds[0])
 	fmt.Println(len(once))
 	all := foldAll(inputDots, inputFolds)
 	fmt.Println(len(all))

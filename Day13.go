@@ -12,20 +12,20 @@ type fold struct {
 	line int
 }
 
-func foldAll(dots []dot, ins []fold) map[dot]bool {
-	output := dots
+func foldAll(dots map[dot]bool, ins []fold) map[dot]bool {
 	dotMap := make(map[dot]bool)
+	dotMap = dots
 	for _, in := range ins {
-		output, dotMap = foldOnce(output, in)
+		dotMap = foldOnce(dotMap, in)
 	}
 
 	return dotMap
 }
 
-func foldOnce(dots []dot, ins fold) ([]dot, map[dot]bool) {
+func foldOnce(dots map[dot]bool, ins fold) map[dot]bool {
 	dotMap := make(map[dot]bool)
 
-	for _, d := range dots {
+	for d, _ := range dots {
 		if ins.x {
 			if d.x < ins.line {
 				dotMap[d] = true
@@ -43,14 +43,7 @@ func foldOnce(dots []dot, ins fold) ([]dot, map[dot]bool) {
 		}
 	}
 
-	var output []dot
-
-	for k, _ := range dotMap {
-		output = append(output, k)
-	}
-
-	return output, dotMap
-
+	return dotMap
 }
 
 func printDots(dotMap map[dot]bool) {

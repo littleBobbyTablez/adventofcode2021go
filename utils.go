@@ -90,14 +90,14 @@ func readFileHeightMap(pathToFile string) [100][100]int {
 	return values
 }
 
-func readFileDotsAndFolds(pathToFile string) ([]dot, []fold) {
+func readFileDotsAndFolds(pathToFile string) (map[dot]bool, []fold) {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {
 		log.Fatalf("Error readinf File: %s\n", err)
 	}
 
 	input := strings.Split(string(s), "\n\n")
-	var dots []dot
+	dots := make(map[dot]bool)
 	var folds []fold
 	dotInput := strings.Split(input[0], "\n")
 
@@ -105,7 +105,7 @@ func readFileDotsAndFolds(pathToFile string) ([]dot, []fold) {
 		split := strings.Split(v, ",")
 		x, _ := strconv.Atoi(split[0])
 		y, _ := strconv.Atoi(split[1])
-		dots = append(dots, dot{x, y})
+		dots[dot{x, y}] = true
 	}
 
 	foldInput := strings.Split(input[1], "\n")
