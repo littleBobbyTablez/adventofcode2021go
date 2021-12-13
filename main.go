@@ -17,7 +17,11 @@ func main() {
 	//executeDay10()
 	//executeDay11()
 	//executeDay12()
+	executeDay13()
 
+}
+
+func executeDay13() {
 	//pathToFile := "resources/Day13Example.txt"
 	pathToFile := "resources/Day13Input.txt"
 	inputDots, inputFolds := readFileDotsAndFolds(pathToFile)
