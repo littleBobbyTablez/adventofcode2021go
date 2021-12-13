@@ -90,6 +90,37 @@ func readFileHeightMap(pathToFile string) [100][100]int {
 	return values
 }
 
+func readFileDotsAndFolds(pathToFile string) ([]dot, []fold) {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	input := strings.Split(string(s), "\n\n")
+	var dots []dot
+	var folds []fold
+	dotInput := strings.Split(input[0], "\n")
+
+	for _, v := range dotInput {
+		split := strings.Split(v, ",")
+		x, _ := strconv.Atoi(split[0])
+		y, _ := strconv.Atoi(split[1])
+		dots = append(dots, dot{x, y})
+	}
+
+	foldInput := strings.Split(input[1], "\n")
+
+	for _, v := range foldInput {
+		split := strings.Split(v, " ")
+		elem := strings.Split(split[2], "=")
+		l, _ := strconv.Atoi(elem[1])
+		foldInstruction := fold{elem[0] == "x", l}
+		folds = append(folds, foldInstruction)
+	}
+
+	return dots, folds
+}
+
 func readFileRowToFishMap(pathToFile string) map[int]int {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {

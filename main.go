@@ -16,14 +16,26 @@ func main() {
 	//executeDay9()
 	//executeDay10()
 	//executeDay11()
+	//executeDay12()
 
+	//pathToFile := "resources/Day13Example.txt"
+	pathToFile := "resources/Day13Input.txt"
+	inputDots, inputFolds := readFileDotsAndFolds(pathToFile)
+
+	once, _ := foldOnce(inputDots, inputFolds[0])
+	fmt.Println(len(once))
+	all := foldAll(inputDots, inputFolds)
+	fmt.Println(len(all))
+	printDots(all)
+}
+
+func executeDay12() {
 	pathToFile := "resources/Day12Example.txt"
 	//pathToFile := "resources/Day12Input.txt"
 	input := readFileToPathMap(pathToFile)
 
 	//fmt.Println(findPaths(input))
 	findPaths2(input)
-
 }
 
 func executeDay11() {
