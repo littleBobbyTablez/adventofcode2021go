@@ -16,9 +16,19 @@ func main() {
 	//executeDay9()
 	//executeDay10()
 	//executeDay11()
-	executeDay12()
+	//executeDay12()
 	//executeDay13()
 
+	executeDay14()
+}
+
+func executeDay14() {
+	//pathToFile := "resources/Day14Example.txt"
+	pathToFile := "resources/Day14Input.txt"
+
+	startingMap, rules := readFileInsertRules(pathToFile)
+
+	fmt.Println(insert(startingMap, rules, 40))
 }
 
 func executeDay13() {

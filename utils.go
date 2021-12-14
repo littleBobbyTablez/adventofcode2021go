@@ -29,6 +29,31 @@ func readFileOctupusMap(pathToFile string) [10][10]int {
 	return values
 }
 
+func readFileInsertRules(pathToFile string) (map[string]int, map[string]string) {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	input := strings.Split(string(s), "\n\n")
+	rules := make(map[string]string)
+
+	ruleStrings := strings.Split(input[1], "\n")
+
+	for _, rs := range ruleStrings {
+		split := strings.Split(rs, " -> ")
+		rules[split[0]] = split[1]
+	}
+
+	startingMap := make(map[string]int)
+	start := input[0]
+	for i := 0; i < len(start)-1; i++ {
+		startingMap[string(start[i])+string(start[i+1])] += 1
+	}
+
+	return startingMap, rules
+}
+
 func readFileToIntSlice(pathToFile string) []int {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {
