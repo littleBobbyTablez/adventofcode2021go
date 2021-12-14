@@ -51,5 +51,5 @@ func countAndSubtract(input map[string]int) int {
 		}
 	}
 
-	return (most - fewest + 1) / 2
+	return (most - fewest + ((most % 2) - (fewest % 2))) / 2
 }
