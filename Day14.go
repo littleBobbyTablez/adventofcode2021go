@@ -1,13 +1,10 @@
 package main
 
 func insert(input map[string]int, rules map[string]string, count int) int {
-	if count == 0 {
-		return countAndSubtract(input)
+	for i := 0; i < count; i++ {
+		input = insertOnce(input, rules)
 	}
-
-	newInput := insertOnce(input, rules)
-
-	return insert(newInput, rules, count-1)
+	return countAndSubtract(input)
 }
 
 func insertOnce(input map[string]int, rules map[string]string) map[string]int {
@@ -51,5 +48,6 @@ func countAndSubtract(input map[string]int) int {
 		}
 	}
 
+	// % are necessary to care for edges
 	return (most - fewest + ((most % 2) - (fewest % 2))) / 2
 }
