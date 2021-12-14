@@ -8,10 +8,8 @@ func insert(input map[string]int, rules map[string]string, count int) int {
 }
 
 func insertOnce(input map[string]int, rules map[string]string) map[string]int {
-	output := make(map[string]int)
-	for k, v := range input {
-		output[k] = v
-	}
+	output := copyMap(input)
+
 	for k, v := range input {
 		elem := rules[k]
 		first := string(k[0]) + elem
@@ -21,6 +19,14 @@ func insertOnce(input map[string]int, rules map[string]string) map[string]int {
 		output[k] = output[k] - v
 	}
 
+	return output
+}
+
+func copyMap(input map[string]int) map[string]int {
+	output := make(map[string]int)
+	for k, v := range input {
+		output[k] = v
+	}
 	return output
 }
 
