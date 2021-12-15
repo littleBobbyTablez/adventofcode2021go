@@ -19,7 +19,15 @@ func main() {
 	//executeDay12()
 	//executeDay13()
 
-	executeDay14()
+	//executeDay14()
+
+	//pathToFile := "resources/Day15Example.txt"
+	pathToFile := "resources/Day15Input.txt"
+
+	input := readFileToRiskLevelMap(pathToFile)
+
+	findShortestPath(point{0, 0}, input, point{99, 99})
+	findShortestPathWithRealMap(point{0, 0}, input, point{499, 499})
 }
 
 func executeDay14() {

@@ -29,6 +29,27 @@ func readFileOctupusMap(pathToFile string) [10][10]int {
 	return values
 }
 
+func readFileToRiskLevelMap(pathToFile string) map[point]int {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	input := strings.Split(string(s), "\n")
+
+	output := make(map[point]int)
+
+	for i, v := range input {
+		split := strings.Split(v, "")
+		for j, n := range split {
+			lvl, _ := strconv.Atoi(n)
+			output[point{i, j}] = lvl
+		}
+	}
+
+	return output
+}
+
 func readFileInsertRules(pathToFile string) (map[string]int, map[string]string) {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {
