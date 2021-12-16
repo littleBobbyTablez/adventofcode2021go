@@ -201,6 +201,23 @@ func readFileToStringSlice(pathToFile string) []string {
 	return strings.Split(string(s), "\n")
 }
 
+func parseHexVals(pathToFile string) map[string]string {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	values := strings.Split(string(s), "\n")
+
+	m := make(map[string]string)
+
+	for _, v := range values {
+		split := strings.Split(v, " = ")
+		m[split[0]] = split[1]
+	}
+	return m
+}
+
 func readFileToPathMap(pathToFile string) map[string][]string {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {

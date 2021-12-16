@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 )
 
 func main() {
@@ -20,7 +21,25 @@ func main() {
 	//executeDay13()
 
 	//executeDay14()
+	//ececuteDay15()
 
+	executeDay16()
+}
+
+func executeDay16() {
+	pathToHex := "resources/hexVals.txt"
+	hexVals := parseHexVals(pathToHex)
+	pathToFile := "resources/Day16Input.txt"
+	s, _ := ioutil.ReadFile(pathToFile)
+
+	binary := translateToBinary(string(s), hexVals)
+	//binary := translateToBinary("880086C3E88112", hexVals)
+
+	p := packageParser{bs(binary), 0, 0}
+	fmt.Println(p.parse())
+}
+
+func ececuteDay15() {
 	//pathToFile := "resources/Day15Example.txt"
 	pathToFile := "resources/Day15Input.txt"
 
