@@ -23,7 +23,7 @@ func nextStep(p point, v point, min point, max point, h int) int {
 	np := p.move(v)
 	nv := v.decreaseVelocity()
 
-	if np.isHigerThan(h) {
+	if np.isHigherThan(h) {
 		h = np.y
 	}
 	if np.isOnTarget(min, max) {
@@ -51,7 +51,7 @@ func (p point) decreaseVelocity() point {
 	}
 }
 
-func (p point) isHigerThan(h int) bool {
+func (p point) isHigherThan(h int) bool {
 	return p.y > h
 }
 
