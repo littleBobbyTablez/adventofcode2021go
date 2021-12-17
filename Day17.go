@@ -5,7 +5,7 @@ func findHighestPoint(min point, max point) (int, point) {
 	v := point{0, min.y}
 	for x := 0; x < max.x; x++ {
 		for y := min.y; y < 500; y++ {
-			nh := moveStep(point{0, 0}, point{x, y}, min, max, 0)
+			nh := nextStep(point{0, 0}, point{x, y}, min, max, 0)
 			if nh > h {
 				h = nh
 				v = point{x, y}
@@ -20,7 +20,7 @@ func findNumberOfPoints(min point, max point) int {
 	var points []point
 	for x := 0; x <= max.x; x++ {
 		for y := min.y; y <= min.y*-1; y++ {
-			nh := moveStep(point{0, 0}, point{x, y}, min, max, 0)
+			nh := nextStep(point{0, 0}, point{x, y}, min, max, 0)
 			if nh != -1 {
 				c += 1
 				points = append(points, point{x, y})
@@ -30,14 +30,13 @@ func findNumberOfPoints(min point, max point) int {
 	return c
 }
 
-func moveStep(p point, v point, min point, max point, h int) int {
+func nextStep(p point, v point, min point, max point, h int) int {
 	np := p.move(v)
 	nv := v.decreaseVelocity()
 
-	if np.y > h {
+	if np.isHigerThan(h) {
 		h = np.y
 	}
-
 	if np.isOnTarget(min, max) {
 		return h
 	}
@@ -45,7 +44,7 @@ func moveStep(p point, v point, min point, max point, h int) int {
 		return -1
 	}
 
-	return moveStep(np, nv, min, max, h)
+	return nextStep(np, nv, min, max, h)
 }
 
 func (p point) move(v point) point {
@@ -61,6 +60,10 @@ func (p point) decreaseVelocity() point {
 	default:
 		return point{p.x, p.y - 1}
 	}
+}
+
+func (p point) isHigerThan(h int) bool {
+	return p.y > h
 }
 
 func (p point) isOnTarget(min point, max point) bool {
