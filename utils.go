@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"sort"
@@ -198,7 +199,14 @@ func readFileToStringSlice(pathToFile string) []string {
 		log.Fatalf("Error readinf File: %s\n", err)
 	}
 
-	return strings.Split(string(s), "\n")
+	split := strings.Split(string(s), "\n")
+
+	var trimmed []string
+	for _, s2 := range split {
+
+		trimmed = append(trimmed, strings.Trim(s2, " \n"))
+	}
+	return trimmed
 }
 
 func parseHexVals(pathToFile string) map[string]string {
@@ -334,4 +342,21 @@ func parsePoint(s string) point {
 	x, _ := strconv.Atoi(strings[0])
 	y, _ := strconv.Atoi(strings[1])
 	return point{x, y}
+}
+
+func diffFiles(p1 string, p2 string) {
+	one := readFileToStringSlice(p1)
+	two := readFileToStringSlice(p2)
+
+	for _, s := range one {
+		isInBoth := false
+		for _, i := range two {
+			if i == s {
+				isInBoth = true
+			}
+		}
+		if !isInBoth {
+			fmt.Println(s)
+		}
+	}
 }

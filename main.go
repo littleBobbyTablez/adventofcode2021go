@@ -23,7 +23,14 @@ func main() {
 	//executeDay14()
 	//ececuteDay15()
 
-	executeDay16()
+	//executeDay16()
+
+	executeDay17()
+}
+
+func executeDay17() {
+	fmt.Println(findHighestPoint(point{244, -91}, point{303, -54}))
+	fmt.Println(findNumberOfPoints(point{244, -91}, point{303, -54}))
 }
 
 func executeDay16() {
