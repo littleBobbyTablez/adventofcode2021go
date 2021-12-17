@@ -29,8 +29,11 @@ func main() {
 }
 
 func executeDay17() {
-	fmt.Println(findHighestPoint(point{244, -91}, point{303, -54}))
-	fmt.Println(findNumberOfPoints(point{244, -91}, point{303, -54}))
+	height, highestPoint, velocityCount := findHighestPointAndVelocityCount(point{244, -91}, point{303, -54})
+
+	fmt.Println(height)
+	fmt.Println(highestPoint)
+	fmt.Println(velocityCount)
 }
 
 func executeDay16() {

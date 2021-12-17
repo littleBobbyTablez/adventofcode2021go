@@ -1,33 +1,22 @@
 package main
 
-func findHighestPoint(min point, max point) (int, point) {
+func findHighestPointAndVelocityCount(min point, max point) (int, point, int) {
 	h := 0
 	v := point{0, min.y}
+	c := 0
 	for x := 0; x < max.x; x++ {
-		for y := min.y; y < 500; y++ {
+		for y := min.y; y < min.y*-1; y++ {
 			nh := nextStep(point{0, 0}, point{x, y}, min, max, 0)
 			if nh > h {
 				h = nh
 				v = point{x, y}
 			}
-		}
-	}
-	return h, v
-}
-
-func findNumberOfPoints(min point, max point) int {
-	c := 0
-	var points []point
-	for x := 0; x <= max.x; x++ {
-		for y := min.y; y <= min.y*-1; y++ {
-			nh := nextStep(point{0, 0}, point{x, y}, min, max, 0)
 			if nh != -1 {
 				c += 1
-				points = append(points, point{x, y})
 			}
 		}
 	}
-	return c
+	return h, v, c
 }
 
 func nextStep(p point, v point, min point, max point, h int) int {
