@@ -321,6 +321,17 @@ func readFileToDisplays(pathToFile string) []display {
 	return displays
 }
 
+func readFileListOfPairs(pathToFile string) []string {
+	s, err := ioutil.ReadFile(pathToFile)
+	if err != nil {
+		log.Fatalf("Error readinf File: %s\n", err)
+	}
+
+	split := strings.Split(string(s), "\n")
+
+	return split
+}
+
 func readFileToLines(pathToFile string) []line {
 	s, err := ioutil.ReadFile(pathToFile)
 	if err != nil {

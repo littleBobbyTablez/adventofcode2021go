@@ -19,13 +19,19 @@ func main() {
 	//executeDay11()
 	//executeDay12()
 	//executeDay13()
-
 	//executeDay14()
 	//ececuteDay15()
-
 	//executeDay16()
+	//executeDay17()
 
-	executeDay17()
+	pathToFile := "resources/Day18Input.txt"
+	//pathToFile := "resources/Day18Example.txt"
+	numbers := readFileListOfPairs(pathToFile)
+
+	sum := addAll(numbers)
+
+	fmt.Println(calculateMagniture(sum))
+	fmt.Println(findLargestSum(numbers))
 }
 
 func executeDay17() {
