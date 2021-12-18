@@ -26,7 +26,7 @@ func Test_explosions(t *testing.T) {
 	for i, tt := range tests {
 		t.Run(tt, func(t *testing.T) {
 			first := findFirstPairOfNumbers(tt)
-			actual := explodeAll("", tt, first, make(map[string]int))
+			actual := explodeAll("", tt, first)
 			if want[i] != actual {
 				fmt.Println(actual)
 				fmt.Println(want[i])
@@ -108,7 +108,7 @@ func Test_Magnitude(t *testing.T) {
 	}
 	for i, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			actual := calculateMagniture(test.sut)
+			actual := calculateMagnitude(test.sut)
 
 			//fmt.Println(actual)
 			if actual != want[i] {
