@@ -35,7 +35,8 @@ func executeDay18() {
 	sum := addAll(numbers)
 
 	fmt.Println(calculateMagnitude(sum))
-	fmt.Println(findLargestSum(numbers))
+	//fmt.Println(findLargestSum(numbers))
+	fmt.Println(findMaxConcurrent(numbers))
 }
 
 func executeDay17() {

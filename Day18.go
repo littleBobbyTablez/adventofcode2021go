@@ -2,6 +2,7 @@ package main
 
 import (
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 )
@@ -191,17 +192,43 @@ func calculateMagnitude(s string) int {
 	return calculateMagnitude(pre + magnitude + post)
 }
 
-func findLargestSum(numbers []string) int {
+func findLargestSum(numbers []string, all []string, ch chan int) {
 	max := 0
 	for i := 0; i < len(numbers); i++ {
-		for j := 0; j < len(numbers); j++ {
+		for j := 0; j < len(all); j++ {
 			if i != j {
-				b := calculateMagnitude(addNumbers(numbers[j], numbers[i]))
+				b := calculateMagnitude(addNumbers(numbers[i], all[j]))
 				if b > max {
 					max = b
 				}
 			}
 		}
 	}
+	ch <- max
+}
+
+func findMaxConcurrent(n []string) int {
+	l := len(n)
+
+	ch := make(chan int, 4)
+	defer close(ch)
+
+	nCPU := runtime.NumCPU()
+
+	f := l / nCPU
+
+	for i := 0; i < nCPU; i++ {
+		cut := n[f*i : f*(i+1)]
+		go findLargestSum(cut, n, ch)
+	}
+
+	max := 0
+	for i := 0; i < nCPU; i++ {
+		res := <-ch
+		if max < res {
+			max = res
+		}
+	}
+
 	return max
 }
